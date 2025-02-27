@@ -507,7 +507,7 @@ rules:
     - DOMAIN-KEYWORD,388gaming,REJECT
     - GEOIP,MM,auto
     - GEOIP,facebook,auto
-    - GEOSITE,google-play,DIRECT
+#    - GEOSITE,google-play,DIRECT
     - GEOSITE,iqiyi-ads,REJECT
     - DOMAIN,geosite:adblockplus,REJECT
     - DOMAIN,geosite:segment-ads,REJECT
