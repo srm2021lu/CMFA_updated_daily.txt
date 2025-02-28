@@ -1,5 +1,7 @@
-cport: 7890
+port: 7890
 socks-port: 7891
+redir-port: 7893
+#tproxy-port: 7894
 mixed-port: 7892
 allow-lan: true
 lan-allowed-ips:
@@ -17,13 +19,13 @@ find-process-mode: always
 log-level: info
 unified-delay: true
 tcp-concurrent: true
-external-controller: 127.0.0.1:9090
-external-controller-tls: 127.0.0.1:9443
+external-controller: 0.0.0.0:9091
+external-controller-tls: 127.0.0.1:9092
 external-controller-unix: mihomo.sock
 external-ui: ui
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://metacubexd.pages.dev/"
 global-client-fingerprint: random
-routing-mark: 6666
+routing-mark: 0xff
 interface-name: en0
 geodata-mode: true
 geodata-loader: memconservative
@@ -44,8 +46,12 @@ hosts:
     '.dev': '127.0.0.1'
     'alpha.clash.dev': '::1'
     'geosite:category-ads-all': '127.0.0.1'
+    'https://metacubexd.pages.dev' : '127.0.0.1'
 sniffer:
     enable: true
+    force-dns-mapping: true
+    parse-pure-ip: true
+    override-destination: false
     sniff:
       HTTP:
          ports: [80, 8080-8880]
@@ -72,81 +78,96 @@ tun:
     dns-hijack:
       - any:53
       - tcp://any:53
-    device: utun0
-    mtu: 9000
-    strict-route: true
-    gso: true
-    gso-max-size: 65536
-    udp-timeout: 300
-    iproute2-table-index: 2022
-    iproute2-rule-index: 9000
-    endpoint-independent-nat: false
+      - 8.8.8.8:53  
+      - tcp://8.8.8.8:53  
+      - tcp://any:53
+#    device: utun0
+#     mtu: 9000
+#    strict-route: true
+#    gso: true
+#    gso-max-size: 65536
+#    udp-timeout: 300
+#    iproute2-table-index: 2022
+#    iproute2-rule-index: 9000
+#    endpoint-independent-nat: false
     route-address:
-      - 0.0.0.0/1
-      - 128.0.0.0/1
+      - "0.0.0.0/1"
+      - "128.0.0.0/1"
       - "::/1"
       - "8000::/1"
     route-exclude-address:
-      - 192.168.0.0/16
-      - fc00::/7
-    include-interface:
-      - eth0
-    exclude-interface:
-      - eth1
-    include-uid:
-      - 0
-    include-uid-range:
-      - 1000:9999
-    exclude-uid:
-      - 1000
-    exclude-uid-range:
-      - 1000:9999
-    include-android-user:
-      - 0
-      - 10
-    include-package:
-      - com.android.chrome
-    exclude-package:
-      - com.android.captiveportallogin
+      - "192.168.0.0/16"
+      - "fc00::/7"
+#    include-interface:
+#      - eth0
+#    exclude-interface:
+#      - eth1
+#   include-uid:
+#      - 0
+#    include-uid-range:
+#      - 1000:9999
+#    exclude-uid:
+#      - 1000
+#    exclude-uid-range:
+#      - 1000:9999
+#    include-android-user:
+#      - 0
+#      - 10
+#    include-package:
+#      - com.android.chrome
+#    exclude-package:
+#      - com.android.captiveportallogin
 dns:
     enable: true
     ipv6: true
     use-system-hosts: true
     respect-rules: false
     enhanced-mode: fake-ip
-    fake-ip-filter-mode: blacklist
+#    fake-ip-filter-mode: blacklist
     use-hosts: true
     prefer-h3: true
-    default-nameserver:
-      - 1.1.1.1
-      - 8.8.8.8
-      - 127.0.0.1
-    fake-ip-range: 198.18.0.1/15
-    search-domains: [local]
-    fake-ip-filter:
-      - '*.lan'
-      - '*.riotgames.com'
-      - '*.osano.com'
-      - '*.leagueoflegends.com'
-      - '*.rgpub.io'
-      - '*.pvp.net'
-      - '*.riotcdn.net'
-      - 'geoip:wildrift'
-      - '*.singular.net'
     nameserver:
       - 1.1.1.1
       - 8.8.8.8
-      - 127.0.0.1
-      - tls://dns.google
-      - https://1.1.1.1/dns-query
-      - https://8.8.8.8/dns-query
-      - quic://dns.adguard.com
-      - h3://8.8.8.8/dns-query
-      - rcode://success
-      - https://dns64.dns.google/dns-query
-      - dhcp://en0
+    proxy-nameserver:
+      - 1.1.1.1
+      - 8.8.8.8
     fallback:
-      - https://1.1.1.1/dns-query
+      - https://dns.cloudflare.com/dns-query
+      - tls://dns.google:853
+      - 8.8.4.4
+      - 1.0.0.1
+    fake-ip-range: 198.18.0.1/16
+    fake-ip-filter:
+      - +.*
+experimental:
+    sniff-tls-sni: true
+#    fake-ip-filter:
+#      - '*.lan'
+#      - '*.riotgames.com'
+#      - '*.osano.com'
+#      - '*.leagueoflegends.com'
+#      - '*.rgpub.io'
+#      - '*.pvp.net'
+#      - '*.riotcdn.net'
+#      - 'geoip:wildrift'
+#      - '*.singular.net'
+#    nameserver:
+#      - 1.1.1.1
+ #     - 8.8.8.8
+#      - 127.0.0.1
+#      - tls://dns.google
+#      - https://1.1.1.1/dns-query
+#      - https://8.8.8.8/dns-query
+#      - quic://dns.adguard.com
+#      - h3://8.8.8.8/dns-query
+#      - rcode://success
+#      - https://dns64.dns.google/dns-query
+#      - dhcp://en0
+#    fallback:
+#      - https://dns.cloudflare.com/dns-query
+#      - tls://dns.google:853
+#      - https://1.1.1.1/dns-query
     geoip: true
     geoip-code: MM
     geosite:
@@ -172,6 +193,7 @@ dns:
       - '+.google.com'
       - '+.facebook.com'
       - '+.youtube.com'
+enhanced-mode-by-rule: true
 proxies:
     - name: "sggs27"
       type: ssh
@@ -190,7 +212,7 @@ proxy-providers:
          timeout: 0
          expected-status: 204
 #         max-failed-times: 10
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: http
       lazy: false
       proxy: DIRECT
@@ -212,7 +234,7 @@ proxy-providers:
          interval: 60
          timeout: 0
          expected-status: 204
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: http
       lazy: false
       proxy: DIRECT
@@ -233,7 +255,7 @@ proxy-providers:
          interval: 60
          timeout: 0
          expected-status: 204
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: http
       lazy: false
       proxy: DIRECT
@@ -254,7 +276,7 @@ proxy-providers:
          interval: 60
          timeout: 0
          expected-status: 204
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: http
       lazy: false
       proxy: DIRECT
@@ -276,7 +298,7 @@ proxy-providers:
          timeout: 0
          expected-status: 204
          max-failed-times: 10
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: http
       proxy: DIRECT
       lazy: false
@@ -290,17 +312,18 @@ proxy-providers:
       path: ./profile/proxy_providers/shadowsocks.yaml
     V2Node_HK:
       method: GET
-      url: "https://sub.d1.mk/sub?&url=https%3A%2F%2Fwww.v2nodes.com%2Fsubscriptions%2Fcountry%2Fhk%2F%3Fkey%391F41FFB18296AB&target=clash&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false"
+      url: "https://sub.d1.mk/sub?&url=https%3A%2F%2Fwww.v2nodes.com%2Fsubscriptions%2Fcountry%2Fhk%2F%3Fkey%3259D55B5BBD98CC&target=clash&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false"
       health-check:
          method: GET
          enable: true
          interval: 60
          timeout: 0
          expected-status: 204
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: http
       proxy: DIRECT
       lazy: false
+      cipher: chacha20-ietf-poly1305
       interval: 3600
       override:
          skip-cert-verify: true
@@ -311,20 +334,19 @@ proxy-providers:
       path: ./profile/proxy_providers/V2NODE_HK.yaml
     V2Node_SG:
       method: GET
-      url: "https://sub.d1.mk/sub?&url=https%3A%2F%2Fwww.v2nodes.com%2Fsubscriptions%2Fcountry%2Fsg%2F%3Fkey%391F41FFB18296AB&target=clash&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false"
+      url: "https://sub.d1.mk/sub?&url=https%3A%2F%2Fwww.v2nodes.com%2Fsubscriptions%2Fcountry%2Fsg%2F%3Fkey%3259D55B5BBD98CC&target=clash&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false"
       health-check:
          enable: true
          method: GET
          interval: 60
          timeout: 0
          expected-status: 204
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: http
       proxy: DIRECT
       lazy: false
+      cipher: chacha20-ietf-poly1305
       interval: 3600
-      override:
-         skip-cert-verify: true
       header:
          User-Agent:
               - "Clash/v1.18.0"
@@ -338,25 +360,25 @@ proxy-groups:
          interval: 60
          timeout: 0
          expected-status: 204
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: url-test
       proxies: 
          - sggs27
-      icon: "💯"
       exclude-type: DIRECT
       size-limit: 0
       lazy: false
       include-all: true
+      icon: "https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Bypass.png"
 #      filter: "{hk|hongkong|[hong kong]|[Hong Kong]|HK|SG|Singapore|新加坡|香港}"    
     - name: load-balance
       health-check:
          method: GET
          enable: true
          interval: 60
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: load-balance
-      lazy: true
-      strategy: consistent-hashing
+      lazy: false
+      strategy: round-robin
  #     include-all: false
 #      include-all-proxies: true
       include-all-providers: true
@@ -369,9 +391,9 @@ proxy-groups:
          method: GET
          enable: true
          interval: 60
-         url: "https://clients3.google.com/generate_204"
+         url: "https://www.gstatic.com/generate_204"
       type: fallback
-      lazy: true
+      lazy: false
 #      include-all: false
 #      include-all-proxies: true
       include-all-providers: true
@@ -507,6 +529,7 @@ rules:
     - DOMAIN-KEYWORD,388gaming,REJECT
     - GEOIP,MM,auto
     - GEOIP,facebook,auto
+    - GEOSITE,google-play,DIRECT
     - GEOSITE,iqiyi-ads,REJECT
     - DOMAIN,geosite:adblockplus,REJECT
     - DOMAIN,geosite:segment-ads,REJECT
@@ -563,4 +586,10 @@ rules:
     - DOMAIN,sdk-api-v1.singular.net:443,auto,no-resolve
     - PROCESS-NAME,moe.nb4a,DIRECT,no-resolve
     - DOMAIN,ms.applvn.com:443,DIRECT,no-resolve
+    - NETWORK,udp,DIRECT
+    - DSCP,4,DIRECT
+    - IP-SUFFIX,8.8.8.8/24,auto
+    - GEOSITE,youtube,auto
+    - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+    - IP-CIDR6,2620:0:2d0:200::7/32,auto
     - MATCH,auto
