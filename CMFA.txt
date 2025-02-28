@@ -226,8 +226,7 @@ proxy-providers:
       path: ./profile/proxy_providers/soroushmirzaei.yaml
     Barry-Far-SS:
       method: GET
-      url: "https://url.v1.mk/sub?&url=https%3A%2F%2Fraw.githubusercontent.com%2Fbarry-far%2FV2ray-Configs%2Frefs%2Fheads%2Fmain%2FSplitted-By-Protocol%2Fss.txt&target=clash&config=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FSleepyHeeead%2Fsubconverter-config%40master%2Fremote-config%2Funiversal%2Furltest.ini&emoji=false&append_type=true&append_info=false&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false
-"
+      url: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/All_Configs_Sub.txt"
       health-check:
          enable: true
          method: GET
@@ -248,7 +247,7 @@ proxy-providers:
       path: ./profile/proxy_providers/Barry-Far-SS.yaml   
     Coldwater:
       method: GET
-      url: "https://url.v1.mk/sub?&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcoldwater-10%2FV2ray-Config%2Fmain%2FSplitted-By-Protocol%2Fss.txt&target=clash&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false"
+      url: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/refs/heads/main/Splitted-By-Protocol/ss.txt"
       health-check:
          enable: true
          method: GET
@@ -269,7 +268,7 @@ proxy-providers:
       path: ./profile/proxy_providers/coldwater.yaml
     Pawdroid:
       method: GET
-      url: "https://url.v1.mk/sub?&url=https%3A%2F%2Fraw.githubusercontent.com%2FPawdroid%2FFree-servers%2Frefs%2Fheads%2Fmain%2Fsub&target=clash&config=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FSleepyHeeead%2Fsubconverter-config%40master%2Fremote-config%2Funiversal%2Furltest.ini&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false"
+      url: "https://raw.githubusercontent.com/Pawdroid/Free-servers/refs/heads/main/sub"
       health-check:
          method: GET
          enable: true
@@ -288,9 +287,9 @@ proxy-providers:
               - "Clash/v1.18.0"
               - "mihomo/1.18.3"
       path: ./profile/proxy_providers/Pawdroid.yaml
-    Shadowsocks:
+    Darknessm427_SS:
       method: GET
-      url: "https://subapi.fxxk.dedyn.io/sub?&url=https%3A%2F%2Fraw.githubusercontent.com%2Fdarknessm427%2FSub%2Fmain%2FV2ss%7Chttps%3A%2F%2Fraw.githubusercontent.com%2Fbarry-far%2FV2ray-Configs%2Fmain%2FSplitted-By-Protocol%2Fss.txt%7Chttps%3A%2F%2Fgithub.com%2FEpodonios%2Fv2ray-configs%2Fraw%2Fmain%2FSplitted-By-Protocol%2Fss.txt%7Chttps%3A%2F%2Fraw.githubusercontent.com%2FNiREvil%2Fvless%2Fmain%2Fsub%2FSSTime%7Chttps%3A%2F%2Fraw.githubusercontent.com%2Fsoroushmirzaei%2Ftelegram-configs-collector%2Frefs%2Fheads%2Fmain%2Fsubscribe%2Fprotocols%2Fshadowsocks%7Chttps%3A%2F%2Figdux.top%2F~21_%40ShadowProxy66&target=clashr&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=true&sort=true&fdn=true&insert=true"
+      url: "https://raw.githubusercontent.com/Pawdroid/Free-servers/refs/heads/main/sub"
       health-check:
          enable: true
          method: GET
@@ -309,7 +308,7 @@ proxy-providers:
          User-Agent:
               - "Clash/v1.18.0"
               - "mihomo/1.18.3"
-      path: ./profile/proxy_providers/shadowsocks.yaml
+      path: ./profile/proxy_providersDarknessm427_SS.yaml
     V2Node_HK:
       method: GET
       url: "https://sub.d1.mk/sub?&url=https%3A%2F%2Fwww.v2nodes.com%2Fsubscriptions%2Fcountry%2Fhk%2F%3Fkey%3259D55B5BBD98CC&target=clash&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false"
