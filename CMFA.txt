@@ -180,7 +180,7 @@ proxy-providers:
 
     Soroushmirzaei_SS:
       method: GET
-      url: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/subscribe/protocols/shadowsocks"
+      url: "https://url.v1.mk/sub?&url=https%3A%2F%2Fraw.githubusercontent.com%2Fsoroushmirzaei%2Ftelegram-configs-collector%2Fmain%2Fsubscribe%2Fprotocols%2Fshadowsocks&target=clash&new_name=true&wxclude=cipher%3A%20ss&emoji=false&append_type=true&append_info=true&scv=true&udp=true&list=false&sort=false&fdn=true&insert=false"
       health-check:
          enable: true
          method: GET
